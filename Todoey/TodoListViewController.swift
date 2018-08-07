@@ -12,11 +12,15 @@ class TodoListViewController: UITableViewController {
 
     var itemArray = ["Find job", "Do job", "job job job"]
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+            itemArray = items
+        }
     }
 
     
@@ -60,6 +64,8 @@ class TodoListViewController: UITableViewController {
             //what will happen once user clicks add item button on ui alert
             print(textField.text)
             self.itemArray.append(textField.text!)
+            
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             
             self.tableView.reloadData()
         }
